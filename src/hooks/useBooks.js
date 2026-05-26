@@ -1,8 +1,3 @@
-/**
- * useBooks.js
- * Custom hook that owns all book data state and CRUD operations.
- * Components just call the returned handlers — no fetch logic leaks into UI.
- */
 import { useState, useEffect, useCallback } from 'react'
 import * as api from '../api/booksApi'
 

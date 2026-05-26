@@ -95,12 +95,13 @@ const DEFAULT_BOOKS = [
 function load() {
   try {
     const stored = localStorage.getItem(KEY)
-    // First visit → use DEFAULT_BOOKS
-    if (stored === null) {
+    const parsed = stored ? JSON.parse(stored) : null
+    
+    if (!parsed || parsed.length === 0) {
       save(DEFAULT_BOOKS)
       return DEFAULT_BOOKS
     }
-    return JSON.parse(stored)
+    return parsed
   } catch {
     return DEFAULT_BOOKS
   }
@@ -116,18 +117,18 @@ export const getAll = async () => {
 
 export const create = async (data) => {
   const books = load()
-  const book = { ...data, id: Date.now() }
+  const book = { ...data, id: String(Date.now()) }
   save([...books, book])
   return book
 }
 
 export const update = async (id, data) => {
-  const books = load().map((b) => b.id === id ? { ...b, ...data } : b)
+  const books = load().map((b) => String(b.id) === String(id) ? { ...b, ...data } : b)
   save(books)
-  return books.find((b) => b.id === id)
+  return books.find((b) => String(b.id) === String(id))
 }
 
 export const remove = async (id) => {
-  save(load().filter((b) => b.id !== id))
+  save(load().filter((b) => String(b.id) !== String(id)))
   return { success: true }
 }
