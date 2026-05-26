@@ -1,12 +1,7 @@
-/**
- * App.jsx
- * Root component. Owns search/filter/sort/view UI state.
- * Delegates data logic to useBooks() and rendering to BookCard.
- */
 import { useState, useRef } from 'react'
 import { useBooks } from './hooks/useBooks'
 import BookCard from './components/BookCard'
-import BookForm, { GENRES } from './components/BookForm'
+import BookForm from './components/BookForm'
 import { Modal, Toast, Spinner, BookCover } from './components/UI'
 
 const SORT_OPTIONS = [
